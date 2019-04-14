@@ -41,11 +41,19 @@ export default class NavMenu extends Component<any, any> {
                                   isOpen={this.state.isOpen} navbar>
                             <ul className='navbar-nav flex-grow'>
                                 <NavItem>
-                                    <NavLink tag={Link} className='text-dark' to='/'>Home</NavLink>
+                                    <NavLink tag={Link} className='text-dark' to='/workshop_registration'>
+                                        Workshop Registration
+                                    </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className='text-dark' to='/fetch-data'>Fetch
-                                        data</NavLink>
+                                    <NavLink tag={Link} className='text-dark' to='/user'>
+                                        My Information
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className='text-dark' to='/'>
+                                        Logout
+                                    </NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>

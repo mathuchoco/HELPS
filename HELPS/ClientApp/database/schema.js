@@ -1,6 +1,6 @@
 const workshop = {
     type: "object",
-    required: ["id", "studentId", "name"],
+    required: ["id", "title", "time", "duration"],
     properties: {
         id: {
             type: "integer",
@@ -8,20 +8,46 @@ const workshop = {
             autoIncrement: true
         },
         studentId: {
-            type: "integer",
-            initialOffset: 1,
-            autoIncrement: true
+            type: "integer"
         },
-        name: {
+        title: {
             type: "string",
             faker: "name.jobDescriptor"
+        },
+        time: {
+            type: "string",
+            faker: "date.recent"
+        },
+        duration: {
+            type: "integer",
+            minimum: 0,
+            maximum: 120
         }
     }
 };
 
 const student = {
     type: "object",
-    required: ["id", "name"],
+    required: [
+        "id",
+        "name",
+        "prefFirstName",
+        "faculty",
+        "course",
+        "email",
+        "homePhone",
+        "mobile",
+        "bestContactNumber",
+        "dob",
+        "gender",
+        "degree",
+        "year",
+        "status",
+        "firstLanguage",
+        "countryOfOrigin",
+        "educationalBackground",
+        "other",
+    ],
     properties: {
         id: {
             type: "integer",
@@ -29,6 +55,70 @@ const student = {
             autoIncrement: true
         },
         name: {
+            type: "string",
+            faker: "name.findName"
+        },
+        prefFirstName: {
+            type: "string",
+            faker: "name.findName"
+        },
+        faculty: {
+            type: "string",
+            faker: "name.findName"
+        },
+        course: {
+            type: "string",
+            faker: "name.findName"
+        },
+        email: {
+            type: "string",
+            faker: "name.findName"
+        },
+        homePhone: {
+            type: "string",
+            faker: "name.findName"
+        },
+        mobile: {
+            type: "string",
+            faker: "name.findName"
+        },
+        bestContactNumber: {
+            type: "string",
+            faker: "name.findName"
+        },
+        dob: {
+            type: "string",
+            faker: "name.findName"
+        },
+        gender: {
+            type: "string",
+            faker: "name.findName"
+        },
+        degree: {
+            type: "string",
+            faker: "name.findName"
+        },
+        year: {
+            type: "string",
+            faker: "name.findName"
+        },
+        status: {
+            type: "string",
+            faker: "name.findName"
+        },
+        firstLanguage: {
+            type: "string",
+            faker: "name.findName"
+        },
+        countryOfOrigin: {
+            type: "string",
+            faker: "name.findName"
+        },
+        educationalBackground: {
+            type: "string",
+            faker: "name.findName"
+        },
+        other: {
             type: "string",
             faker: "name.findName"
         }
@@ -57,7 +147,7 @@ const user = {
 
 const schema = {
     type: "object",
-    required: ["students", "workshops", "users"],
+    required: ["students", "workshops", "users", "studentWorkshops"],
     properties: {
         students: {
             type: "array",
@@ -67,8 +157,8 @@ const schema = {
         },
         workshops: {
             type: "array",
-            minItems: 50,
-            maxItems: 50,
+            minItems: 5,
+            maxItems: 20,
             items: workshop
         },
         users: {
@@ -76,6 +166,12 @@ const schema = {
             minItems: 1,
             maxItems: 5,
             items: user
+        },
+        studentWorkshops: {
+            type: "array",
+            minItems: 0,
+            maxItems: 0,
+            items: workshop
         }
     }
 };
