@@ -2,15 +2,26 @@ import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import * as React from 'react';
 import {Component} from 'react';
-import {UserDispatchProps, UserProps, UserStateProps} from '../../types/components/UserTypes';
+import {UserDispatchProps, UserProps, UserStateProps, UserState} from '../../types/components/UserTypes';
 import {AppState} from '../../types/store/StoreTypes';
 import {retrieveUser, updateUser} from '../../store/actions/UserActions';
 import UserDetailsForm from './UserDetailsForm';
 import Button from 'react-bootstrap/Button';
 import {submit} from 'redux-form';
 import { ThunkDispatch } from 'redux-thunk';
+import { Search } from 'history';
 
-class User extends Component<UserProps> {
+
+
+class User extends Component<UserProps, UserState> {
+    constructor(props: UserProps){
+        super(props);
+        this.state = {
+            searchTerm: '',
+            loadAllUsers: []
+        };
+    }
+   
 
     componentDidMount() {
         if (this.props.authenticated) {
@@ -19,6 +30,14 @@ class User extends Component<UserProps> {
     }
 
     render() {
+       let _loadAllUsers = this.state.loadAllUsers;
+        let Search = this.state.searchTerm;
+
+       if(Search.length > 0){
+           _loadAllUsers = _loadAllUsers.filter(function(loadAllUsers){
+               return student.id.match(Search);
+           })
+       }
         return (
             <div className='row h-100 overflow-auto'>
                 {this.props.error && <p>{this.props.error}</p>}
@@ -33,8 +52,22 @@ class User extends Component<UserProps> {
                 <div className='col m-3'>
                     {this.getUserDetails()}
                 </div>
+                <div>
+                    <input
+                        type="Number"
+                        value={this.state.searchTerm}
+                        ref="Search"
+                        onChange={(e) => console.log(e.target.value)}
+                        placeholder="Search..."
+                        />
+                </div>
+                <ul>
+                    {this.loadAllUsers.map(student)} <li>{student}</li>}
+                </ul>
             </div>
+
         );
+
     }
 
     private getDisclaimer() {
@@ -94,10 +127,12 @@ const mapStateToProps = (state: AppState): UserStateProps => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): UserDispatchProps => ({
     loadUserDetails: () => dispatch(retrieveUser()),
     updateUser: student => dispatch(updateUser(student)),
-    submit: () => dispatch(submit('user_details'))
+    submit: () => dispatch(submit('user_details')),
+    loadAllUsers: () => dispatch(retrieveUser())
 });
 
 export default connect<UserStateProps, UserDispatchProps, {}, AppState>(
     mapStateToProps,
     mapDispatchToProps
 )(User);
+
