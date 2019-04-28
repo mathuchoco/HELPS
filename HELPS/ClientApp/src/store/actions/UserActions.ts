@@ -2,12 +2,13 @@ import {Dispatch} from 'redux';
 import {UserAction, UserActionType} from '../../types/store/actions/UserActionTypes';
 import {Student} from '../../types/model/Student';
 import {LS_STORAGE_KEY} from './AuthActions';
+import index from 'react-big-calendar';
 
 const requestUser = (): UserAction => ({
     type: UserActionType.REQUEST_USER
 });
 
-const receiveUser = (user: Student): UserAction => ({
+const receiveUser = (user: Student[]): UserAction => ({
     type: UserActionType.RECEIVE_USER,
     payload: user
 });
@@ -45,10 +46,10 @@ export const updateUser = (user: Student) => async (dispatch: Dispatch<any>) => 
 
     const student = userResult as Student;
 
-    dispatch(receiveUser(student));
+    dispatch(receiveUser([student]));
 };
 
-export const retrieveUser = () => async (dispatch: Dispatch<any>) => {
+export const retrieveUser = (isAdmin: boolean) => async (dispatch: Dispatch<any>) => {
     dispatch(requestUser());
 
     const token = localStorage.getItem(LS_STORAGE_KEY);
@@ -73,5 +74,15 @@ export const retrieveUser = () => async (dispatch: Dispatch<any>) => {
 
     const student = userResult as Student;
 
-    dispatch(receiveUser(student));
+    if (isAdmin) {
+        // TODO - Update mock server to handle this
+        let dummyStudents: Student[] = Array(10).fill(student);
+        dummyStudents = dummyStudents.map((dummyStudent, currentIndex) => ({
+            ...dummyStudent,
+            id: currentIndex
+        }));
+        dispatch(receiveUser(dummyStudents));
+    }
+
+    dispatch(receiveUser([student]));
 };

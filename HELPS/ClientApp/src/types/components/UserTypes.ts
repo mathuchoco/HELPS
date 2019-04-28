@@ -1,5 +1,4 @@
 import {Student} from '../model/Student';
-import { Search } from 'history';
 
 export interface UserStateProps {
     authenticated: boolean
