@@ -29,17 +29,13 @@ class User extends Component<UserProps, UserState> {
         }
         this.props.loadAllUsers();
     }
-    
-    SelectedStudent(){
-        retrieveUser;
-    }
 
     render() {
-        let allUsers = this.props.students;
-        let Search = this.state.searchTerm;
+        let allUsers = this.props.students ? this.props.students : [];
+        let searchTerm = this.state.searchTerm;
     
-        if (Search.length > 0) {
-            allUsers = allUsers.filter(student1 => student1.name == Search.toLowerCase() || student1.id.toString); {
+        if (searchTerm.length > 0) {
+            allUsers = allUsers.filter(student1 => student1.name == searchTerm.toLowerCase() || student1.id.toString); {
                 return ;
             };
         }
@@ -65,11 +61,15 @@ class User extends Component<UserProps, UserState> {
                         onChange={(e) => console.log(e.target.value)}
                         placeholder="Search..."
                     />
-                    <button onClick={this.SelectedStudent}></button>
-
                 </div>
                 <ul>
-                    {allUsers.map(user => <li>{`${user.name} [${user.id}]`}</li>)}
+                    {allUsers.map(user => {
+                        return (
+                            <li onClick={() => this.setState({selectedStudent: user})}>
+                                {`${user.name} [${user.id}]`}
+                            </li>   
+                        )
+                    })}
                 </ul>
             </div>
 
