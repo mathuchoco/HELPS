@@ -20,7 +20,6 @@ class User extends Component<UserProps, UserState> {
         super(props);
         this.state = {
             searchTerm: '',
-            loadAllUsers: []
         };
     }
 
@@ -28,16 +27,21 @@ class User extends Component<UserProps, UserState> {
         if (this.props.authenticated) {
             this.props.loadUserDetails();
         }
+        this.props.loadAllUsers();
+    }
+    
+    SelectedStudent(){
+        retrieveUser;
     }
 
     render() {
-        let _loadAllUsers = this.state.loadAllUsers;
+        let allUsers = this.props.students;
         let Search = this.state.searchTerm;
-
+    
         if (Search.length > 0) {
-            _loadAllUsers = _loadAllUsers.filter(function (loadAllUsers) {
-                return student.id.match(Search);
-            });
+            allUsers = allUsers.filter(student1 => student1.name == Search.toLowerCase() || student1.id); {
+                return ;
+            };
         }
         return (
             <div className='row h-100 overflow-auto'>
@@ -55,16 +59,18 @@ class User extends Component<UserProps, UserState> {
                 </div>
                 <div>
                     <input
-                        type="Number"
+                        type="text"
                         value={this.state.searchTerm}
                         ref="Search"
                         onChange={(e) => console.log(e.target.value)}
                         placeholder="Search..."
                     />
+                    <button onClick={this.SelectedStudent}></button>
+
                 </div>
                 <ul>
-                    {this.loadAllUsers.map(student)}
-                    <li>{student}</li>
+                    {this.props.loadAllUsers()}
+                    <li>{Student}</li>
                     }
                 </ul>
             </div>
@@ -123,6 +129,7 @@ class User extends Component<UserProps, UserState> {
 const mapStateToProps = (state: AppState): UserStateProps => ({
     authenticated: state.auth.authenticated,
     student: state.user.user,
+    students: state.user.students,
     error: state.user.error,
     loading: state.user.isLoading
 });

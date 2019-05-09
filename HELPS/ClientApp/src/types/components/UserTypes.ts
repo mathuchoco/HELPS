@@ -16,7 +16,7 @@ export interface UserDispatchProps {
 
 export interface UserState {
     loadAllUsers: Student
-    searchTerm: any
+    searchTerm: string
 }
 
 export interface UserProps extends UserStateProps, UserDispatchProps {
