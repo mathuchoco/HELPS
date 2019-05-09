@@ -2,7 +2,8 @@ import {Student} from '../model/Student';
 
 export interface UserStateProps {
     authenticated: boolean
-    student?: Student[]
+    student?: Student
+    students: Student[]
     error?: string
     loading: boolean
 }
@@ -15,7 +16,6 @@ export interface UserDispatchProps {
 }
 
 export interface UserState {
-    loadAllUsers: Student
     searchTerm: string
 }
 
